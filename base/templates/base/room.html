@@ -26,47 +26,138 @@
     </div>
 
     <div class="transcriptions">
-        <section class="transcription-section" id="transcription-wrapper">
-            <h3>Live Transcription:</h3>
-            <p id="transcription-text">Waiting for speech...</p>
-            <button id="start-transcription-btn">Start Transcription</button>
-        </section>
+        <div class="transcription-section">
+            <h2>Enter Text or Use Mic</h2>
+            <br>
+                <form action="{% url 'animation' %}" method="post">
+                {% csrf_token %}
+                            <input type="text" name="sen" class="mytext" id="speechToText" placeholder="">
+                            <button type="button" name="button" class="mic" onclick="record()"><img src="{% static '/images/mic3.png' %}" height="32px" width="38px" /></button>
+                            
+                              <input type="submit" name="submit" class="submit">
         
+                </form>
+                <br>
+                <table cellspacing="20px" style="display: none;">
+                    <tr>
+                        <td class="td">The text that you entered is:</td>
+                        <td class="td">{{ text }}</td>
+                    </tr>
+                    <tr>
+                        <td class="td">Key words in sentence:</td>
+                        <td class="td">
+                        <ul class="td" id="list" >
+                              {% for word in words %}
+                            <li id="{{ i }}" style="margin-right: 8px">{{ word }}</li>
+                              {% endfor %}
+                        </ul>
+                    </td>
+                </tr>
+            </table>
+         
+          <h2 align="center">Sign Language Animation</h2>
+        
+            <div style="text-align:center">	&nbsp&nbsp
+              <button class="submit" onclick="playPause()">Play/Pause</button>
+           
+        
+        
+              <video id="videoPlayer" width="600" height="350"  preload="auto" autoplay>
+                <source src="" type="video/mp4">
+            Your browser does not support HTML5 video.
+              </video>
+              </div></div>
+        </div>
     </div>
+        
+ 
 </div>
 
-<script src="//cdnjs.cloudflare.com/ajax/libs/annyang/2.6.0/annyang.min.js"></script>
+
 <script>
-    // Check if annyang is available
-    if (annyang) {
-        let startTranscription = () => {
-            document.getElementById('transcription-text').innerText = 'Listening...';
-            annyang.start();
-            console.log('Speech recognition started');
-        };
+  //webkitSpeechRecognition api for speech to text conversion
+	function record(){
+		var recognition = new webkitSpeechRecognition();
+		recognition.lang='en-IN';
 
-        let stopTranscription = () => {
-            annyang.abort();
-            console.log('Speech recognition stopped');
-        };
+		recognition.onresult = function(event){
+			console.log(event)
+			document.getElementById('speechToText').value = event.results[0][0].transcript;
+		}
+		recognition.start();
+	 }
+	function play()
+	{
+		var videoSource = new Array();
+		var	videos = document.getElementById("list").getElementsByTagName("li");
+		var j;
+		for(j=0;j<videos.length;j++)
+		{
+			videoSource[j] = "/static/data/" + videos[j].innerHTML +".mp4";
+		}
 
-        let showTranscription = (spokenText) => {
-            document.getElementById('transcription-text').innerText = spokenText;
-        };
+		var i = 0; // define i
+		var videoCount = videoSource.length;
 
-        // Set up the callback for when speech is recognized
-        annyang.addCallback('result', (phrases) => {
-            showTranscription(phrases[0]);
-        });
+		function videoPlay(videoNum)
+		{
+			document.getElementById("list").getElementsByTagName("li")[videoNum].style.color = "#09edc7";
+			document.getElementById("list").getElementsByTagName("li")[videoNum].style.fontSize = "xx-large";
+			document.getElementById("videoPlayer").setAttribute("src", videoSource[videoNum]);
+	    	document.getElementById("videoPlayer").load();
+	    	document.getElementById("videoPlayer").play();
 
-        // Event listener for the "Start Transcription" button
-        document.getElementById('start-transcription-btn').addEventListener('click', startTranscription);
-    } else {
-        console.error('Speech recognition is not supported in this browser.');
-    }
+		}
+		document.getElementById('videoPlayer').addEventListener('ended', myHandler, false);
+		document.getElementById("list").getElementsByTagName("li")[0].style.color = "#09edc7";
+		document.getElementById("list").getElementsByTagName("li")[0].style.fontSize = "xx-large";
+
+		videoPlay(0); // play the video
+
+		function myHandler()
+		{
+	 		document.getElementById("list").getElementsByTagName("li")[i].style.color = "#feda6a";
+			document.getElementById("list").getElementsByTagName("li")[i].style.fontSize = "20px";
+			i++;
+	    	if (i == videoCount)
+	    	{
+	       	    document.getElementById("videoPlayer").pause();
+	    	}
+	     	else
+	     	{
+	        	videoPlay(i);
+	    	}
+		}
+	}
+	/* LETS USE ONLY PLAY PAUSE BUTTON WITH 720 *420 ,IT FITS THE SCREEN
+	function makeBig() {
+	    document.getElementById("videoPlayer").width = 560;
+		document.getElementById("videoPlayer").height = 360;
+	}
+
+	function makeSmall() {
+	    document.getElementById("videoPlayer").width = 320;
+		document.getElementById("videoPlayer").height = 180;
+	}
+
+	function makeNormal() {
+	    document.getElementById("videoPlayer").width = 420;
+		document.getElementById("videoPlayer").height =280;
+	}*/
+	function playPause(){
+  		if (document.getElementById("videoPlayer").paused){
+    		play();}
+  		else{
+    		document.getElementById("videoPlayer").pause();}
+		}
+
+	</script>
+
 
 </script>
 
 <script type="text/javascript" src="{% static 'assets/AgoraRTC_N-4.8.0.js' %}"></script>
 <script type="text/javascript" src="{% static 'js/streams.js' %}"></script>
 {% endblock content %}
+
+
