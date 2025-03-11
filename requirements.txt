@@ -3,3 +3,7 @@ asgiref
 Django
 sqlparse
 tzdata
+daphne
+channels
+channels-redis
+

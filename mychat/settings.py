@@ -31,15 +31,36 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+    'channels',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
-    'django.contrib.staticfiles',
-
+    'django.contrib.staticfiles', 
+    
     'base',
 ]
+
+ASGI_APPLICATION = 'mychat.asgi.application'
+
+# # CHANNEL_LAYERS = {
+#     'default':{
+#         'BACKEND':'channels.layers.InMemoryChannelLayer'
+#     } 
+# }
+
+
+# Redis Channel Layer
+CHANNEL_LAYERS = {
+    "default": {
+        "BACKEND": "channels_redis.core.RedisChannelLayer",
+        "CONFIG": {
+            "hosts": ["rediss://red-cv7pkvogph6c7396cp80:c6U93AMRl8p2ohhnCU2yY9boS3oeKWQt@singapore-keyvalue.render.com:6379"],  # Redis server
+        },
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

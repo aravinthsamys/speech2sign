@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 import random
 import time
-from agora_token_builder import RtcTokenBuilder
+from agora_token_builder import RtcTokenBuilder,RtmTokenBuilder
 from .models import RoomMember
 import json
 from django.views.decorators.csrf import csrf_exempt
@@ -10,6 +10,7 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
 import nltk
+# nltk.download('punkt')
 from django.contrib.staticfiles import finders
 
 
@@ -27,7 +28,7 @@ def getToken(request):
     appId = "ce0e070ac03f4922af4259eeb5c64fd2"
     appCertificate = "10b26fc9a122472f960edd7a96a9ad84"
     channelName = request.GET.get('channel')
-    uid = random.randint(1, 230)
+    uid = str(random.randint(1, 230))
     expirationTimeInSeconds = 3600
     currentTimeStamp = int(time.time())
     privilegeExpiredTs = currentTimeStamp + expirationTimeInSeconds
@@ -36,6 +37,31 @@ def getToken(request):
     token = RtcTokenBuilder.buildTokenWithUid(appId, appCertificate, channelName, uid, role, privilegeExpiredTs)
 
     return JsonResponse({'token': token, 'uid': uid}, safe=False)
+
+
+def get_rtm_token(request):
+    app_id = "ce0e070ac03f4922af4259eeb5c64fd2"  # Your Agora App ID
+    app_certificate = "fd53193fa409464980a0837bca65793a"  # Your Agora App Certificate
+    user_id = str(request.GET.get('uid'))  # Get UID from request
+
+    if not user_id:
+        return JsonResponse({'error': 'User ID is required'}, status=400)
+
+    expiration_time_in_seconds = 60  # Token valid for 1 hour
+    current_timestamp = int(time.time())
+    privilege_expired_ts = current_timestamp + expiration_time_in_seconds
+
+    # Generate RTM token (Requires privilegeExpiredTs)
+    token = RtmTokenBuilder.buildToken(app_id, app_certificate, user_id,1, privilege_expired_ts)
+
+    return JsonResponse({'rtmtoken': token, 'uid': user_id}, safe=False)
+
+
+
+
+
+
+
 
 
 @csrf_exempt
@@ -71,6 +97,8 @@ def deleteMember(request):
     )
     member.delete()
     return JsonResponse('Member deleted', safe=False)
+
+
 
 
 def animation_view(request):
@@ -152,6 +180,6 @@ def animation_view(request):
 		words = filtered_text;
 
 
-		return render(request,'base/room.html',{'words':words,'text':text})
+		return JsonResponse({"text": text, "words": words})
 	else:
 		return render(request,'base/room.html')
