@@ -10,5 +10,5 @@ nltk
 whitenoise
 django-environ
 dj-database-url
-sycopg2-binary
+psycopg2-binary
 
