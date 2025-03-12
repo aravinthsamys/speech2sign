@@ -102,7 +102,7 @@ def deleteMember(request):
 
 
 
-
+@csrf_exempt
 def animation_view(request):
 	if request.method == 'POST':
 		text = request.POST.get('sen')
