@@ -4,6 +4,9 @@ Django
 sqlparse
 tzdata
 daphne
-channels
+channels==3.0.5
 channels-redis
+nltk
+whitenoise
+django-environ
 
