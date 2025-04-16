@@ -106,12 +106,13 @@ def deleteMember(request):
 
 
 
+
 @csrf_exempt
 def animation_view(request):
 	if request.method == 'POST':
-		text = request.POST.get('sen')
+		text = request.POST.get('sen').lower()
 		#tokenizing the sentence
-		text.lower()
+		
 		#tokenizing the sentence
 		words = word_tokenize(text)
 
@@ -174,15 +175,15 @@ def animation_view(request):
 
 		filtered_text = []
 		for w in words:
-			path = w + ".mp4"
+			path = "data/" + w.title() + ".mp4"
 			f = finders.find(path)
 			#splitting the word if its animation is not present in database
 			if not f:
 				for c in w:
-					filtered_text.append(c)
+					filtered_text.append(c.upper())
 			#otherwise animation of word
 			else:
-				filtered_text.append(w)
+				filtered_text.append(w.title())
 		words = filtered_text;
 
 
