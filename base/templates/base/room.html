@@ -2,12 +2,98 @@
 {% load static %}
 {% block content %}
 
+<style>
+  /* Style for the pulse animation */
+  .mic-icon {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+  #micButton.listening {
+    animation: pulse 1s infinite;
+    box-shadow: 0 0 10px #4caf50;
+  }
+
+  @keyframes pulse {
+    0% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0.7); }
+    70% { box-shadow: 0 0 0 10px rgba(76, 175, 80, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(76, 175, 80, 0); }
+  }
+</style>
+
+
+<style>
+  .checkbox-wrapper-2 .ikxBAC {
+    appearance: none;
+    background-color: #dfe1e4;
+    border-radius: 72px;
+    border-style: none;
+    flex-shrink: 0;
+    height: 20px;
+    margin: 0;
+    position: relative;
+    width: 30px;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC::before {
+    bottom: -6px;
+    content: "";
+    left: -6px;
+    position: absolute;
+    right: -6px;
+    top: -6px;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC,
+  .checkbox-wrapper-2 .ikxBAC::after {
+    transition: all 100ms ease-out;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC::after {
+    background-color: #fff;
+    border-radius: 50%;
+    content: "";
+    height: 14px;
+    left: 3px;
+    position: absolute;
+    top: 3px;
+    width: 14px;
+  }
+
+  .checkbox-wrapper-2 input[type=checkbox] {
+    cursor: default;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:hover {
+    background-color: #c9cbcd;
+    transition-duration: 0s;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked {
+    background-color: #6e79d6;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked::after {
+    background-color: #fff;
+    left: 13px;
+  }
+
+  .checkbox-wrapper-2 :focus:not(.focus-visible) {
+    outline: 0;
+  }
+
+  .checkbox-wrapper-2 .ikxBAC:checked:hover {
+    background-color: #535db3;
+  }
+</style>
+
 
 <div class="container">
 	<div class="videos">
 		<main>
 			<section id="room-name-wrapper">
-				<p>Room Name: <span id="room-name"></span></p>
+				<p style="color: #fff;">Room Name: <span id="room-name"></span></p>
 			</section>
 
 			<section id="video-streams"></section>
@@ -30,25 +116,36 @@
 
 	<div class="transcriptions">
 		<div class="transcription-section">
-			<h2>Enter Text or Use Mic</h2>
+			<h2 style="color: #fff;">Enter Text or Use Mic</h2>
+			<div style="margin-bottom: 1rem; display: flex; flex-direction: column; ;">
+			
+			<div class="checkbox-wrapper-2">
+			<label for="modeToggle" style="font-weight: 800; color: #fff; font-size: 20px;">Auto-send:</label>
+			<input type="checkbox" id="modeToggle" class="sc-gJwTLC ikxBAC" />
+			</div>
+			 <small style="color: #d6d4d4;">
+				When enabled, your voice input will be automatically submitted after recognition.
+			</small>
+			</div>
+			
 			<br>
-			<form id="textForm">
+			<form id="textForm" style="display: flex; flex-direction: column; align-items: center; gap: 12px; margin-bottom: 1rem;">
+			
+			<button type="button" id="micButton"  onclick="record()"
+					style="background: none; border: none; padding: 10px; border-radius: 50%; transition: box-shadow 0.3s;">
+				<img src="{% static 'images/mic.jpg' %}" class="mic-icon" />
+			</button>
 
-				<input type="text" name="message" class="mytext" id="speechToText" placeholder=""
-					style="text-transform:capitalize">
-				<button type="button" name="button" class="mic" onclick="record()"><img
-						src="{% static '/images/mic3.png' %}" height="32px" width="38px" /></button>
-				<button id="sendBtn" class="submit">Send</button>
+			<input type="text" name="message" id="speechToText" class="mytext"
+					placeholder="Speak now..." style="display: none; flex: 1; padding: 10px 14px; border: 1px solid #ccc; border-radius: 8px;" />
 
-
+			<button id="sendBtn" class="submit" style="display: none; padding: 10px 16px; border-radius: 6px; background-color: #4caf50; color: white; border: none; cursor: pointer;">
+				Send
+			</button>
 			</form>
 			<br>
 			<div id="messages" style="display: none;"></div>
-			<form action="" method="post">
-				{% csrf_token %}
-				<label for="">Message</label>
-				<input type="text" id="myInput" name="sen" style="text-transform: capitalize;">
-			</form>
+			
 
 			<br>
 			<table cellspacing="20px" style="display: none;">
@@ -68,17 +165,38 @@
 				</tr>
 			</table>
 
-			<h2 align="center">Sign Language Animation</h2>
+			<h2 align="center" style="color: #fff;">Sign Language Animation</h2>
 
 			<div style="text-align:center"> &nbsp&nbsp
-				<button class="submit" onclick="playPause()">Play/Pause</button>
+				<form action="" method="post" id="MsgForm" style="display: none;"  >
+				{% csrf_token %}
+				<div style="margin-left:90px ; margin-bottom: 10px;">
 
+				
+				<label for="" style="color: #fff;">Message :</label>
+				<input type="text" id="myInput" name="sen" 
+				style="
+					text-transform: capitalize;
+					background-color: #404040;  /* match your dark bg */
+					color: #fff;
+					border: none;
+					border-radius: 6px;
+					padding: 10px 14px;
+					font-size: 16px;
+					
+					box-shadow: none;
+					outline: none;
+				">
+				</div>
 
+			</form>
+				
 
-				<video id="videoPlayer" width="600" height="350" preload="auto" autoplay>
+				<video id="videoPlayer" width="400" height="234" preload="auto" autoplay>
 					<source src="" type="video/mp4">
 					Your browser does not support HTML5 video.
 				</video>
+				<button class="submit" style="margin-top: 10px;" onclick="playPause()">Play/Pause</button>
 			</div>
 		</div>
 	</div>
@@ -90,7 +208,7 @@
 </div>
 
 <script type="text/javascript">
-	let url = `wss://${window.location.host}/ws/socket-server/`
+	let url = `ws://${window.location.host}/ws/socket-server/`
 	const chatSocket = new WebSocket(url)
 	chatSocket.onmessage = function (e) {
 		let data = JSON.parse(e.data);
@@ -105,7 +223,9 @@
 				messages.insertAdjacentHTML('beforeend', `<div><p>${data.message}</p></div>`);
 			}
 
+			document.getElementById("MsgForm").style.display = "block";
 			document.getElementById("myInput").value = data.message;
+			
 
 			// Trigger animation for all users, not just sender
 			triggerAnimation(data.message);
@@ -132,17 +252,78 @@
 		form.reset();
 	});
 
-	//webkitSpeechRecognition api for speech to text conversion
-	function record() {
-		var recognition = new webkitSpeechRecognition();
-		recognition.lang = 'en-IN';
 
-		recognition.onresult = function (event) {
-			console.log(event)
-			document.getElementById('speechToText').value = event.results[0][0].transcript;
+	let useCommandMode = true;
+
+	// Watch for toggle changes
+	document.getElementById("modeToggle").addEventListener("change", function () {
+	useCommandMode = !this.checked; // if checked, auto-send (no command)
+	const showManualFields = useCommandMode;
+	document.getElementById("speechToText").style.display = showManualFields ? "block" : "none";
+	document.getElementById("sendBtn").style.display = showManualFields ? "inline-block" : "none";
+	});
+
+
+	//webkitSpeechRecognition api for speech to text conversion
+  function record() {
+	let micBtn = document.getElementById("micButton");
+	let inputBox = document.getElementById("speechToText");
+	let sendBtn = document.getElementById("sendBtn");
+
+	micBtn.classList.add('listening');
+
+	const recognition = new webkitSpeechRecognition();
+	recognition.lang = 'en-IN';
+	recognition.interimResults = false;
+	recognition.maxAlternatives = 1;
+
+	recognition.onresult = function (event) {
+		let transcript = event.results[0][0].transcript.trim();
+		console.log("Transcript:", transcript);
+
+		micBtn.classList.remove('listening');
+
+		// Show input + send button
+		inputBox.style.display = "block";
+		sendBtn.style.display = "inline-block";
+
+		let cleanedMessage = transcript;
+
+		if (useCommandMode) {
+		const lowerTranscript = transcript.toLowerCase();
+		inputBox.style.display = "block";
+		sendBtn.style.display = "inline-block";
+		if (lowerTranscript.includes("send message")) {
+			cleanedMessage = transcript.replace(/send message/i, "").trim();
+			inputBox.value = cleanedMessage;
+			if (cleanedMessage.length > 0) {
+			document.getElementById("textForm").requestSubmit();
+			}
+		} else {
+			inputBox.value = cleanedMessage;
 		}
-		recognition.start();
+		} else {
+			inputBox.style.display = "none";
+            sendBtn.style.display = "none";
+		inputBox.value = cleanedMessage;
+		if (cleanedMessage.length > 0) {
+			document.getElementById("textForm").requestSubmit();
+		}
+		}
+	};
+
+	recognition.onerror = function (event) {
+		console.error("Speech recognition error:", event.error);
+		micBtn.classList.remove('listening');
+	};
+
+	recognition.onend = function () {
+		micBtn.classList.remove('listening');
+	};
+
+	recognition.start();
 	}
+
 	function triggerAnimation(inputText) {
 		let formData = new FormData();
 		formData.append("sen", inputText);

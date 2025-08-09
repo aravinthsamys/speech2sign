@@ -180,8 +180,7 @@ body {
 
 /* Optional styling for the columns */
 .videos {
-    border: 1px solid #f9f871;
-    /* Add a border for clarity */
+    border: 1px solid;
     padding: 10px;
     border-radius: 20px;
     box-shadow: 0px 0px 10px 0px #9c9a9a;
@@ -189,17 +188,6 @@ body {
 
 .transcriptions {
     border: 1px solid 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     ;
     /* Add a border for clarity */
     padding: 10px;
@@ -221,6 +209,7 @@ body {
     align-items: center;
 
     height: 100%;
+    width: 400px;
     text-align: center;
 }
 
@@ -273,11 +262,11 @@ body {
     height: 42px;
     width: 160px;
     text-align: center;
-    background-color: #feda6a;
-    color: #393f4d;
+    background-color: #7c7c7b;
+    color: #fff;
     font-weight: bold;
     font-size: 24px;
     font-family: "Times New Roman";
     vertical-align:top;
-    border-radius: 20px;
+    border-radius: 10px;
 }
