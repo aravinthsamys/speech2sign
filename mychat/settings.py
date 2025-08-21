@@ -36,9 +36,9 @@ if ENVIRONMENT == 'development':
 else:
     DEBUG = False    
 
-ALLOWED_HOSTS = ['localhost','127.0.0.1','speechsign.onrender.com']
+ALLOWED_HOSTS = ['localhost','127.0.0.1','speech2sign.onrender.com']
 
-CSRF_TRUSTED_ORIGINS =['https://speechsign.onrender.com']
+CSRF_TRUSTED_ORIGINS =['https://speech2sign.onrender.com']
 
 # Application definition
 
