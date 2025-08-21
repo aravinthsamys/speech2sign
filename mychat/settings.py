@@ -18,7 +18,7 @@ env = Env()
 Env.read_env()
 
 ENVIRONMENT = env('ENVIRONMENT',default="production")
-# ENVIRONMENT = "production"
+ENVIRONMENT = "production"
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -57,22 +57,22 @@ INSTALLED_APPS = [
 
 ASGI_APPLICATION = 'mychat.asgi.application'
 
-# CHANNEL_LAYERS = {
-#     'default':{
-#         'BACKEND':'channels.layers.InMemoryChannelLayer'
-#     } 
-# }
+CHANNEL_LAYERS = {
+    'default':{
+        'BACKEND':'channels.layers.InMemoryChannelLayer'
+    } 
+}
 
 
 # Redis Channel Layer
-CHANNEL_LAYERS = {
-    "default": {
-        "BACKEND": "channels_redis.core.RedisChannelLayer",
-        "CONFIG": {
-            "hosts": ["rediss://red-d2bpd5p5pdvs73d0ldhg:E4lfi0wgvIz0u6iSlQe2ZBBHbl2Y0mQU@oregon-keyvalue.render.com:6379"],  # Redis server
-        },
-    },
-}
+# CHANNEL_LAYERS = {
+#     "default": {
+#         "BACKEND": "channels_redis.core.RedisChannelLayer",
+#         "CONFIG": {
+#             "hosts": ["rediss://red-cv7pkvogph6c7396cp80:c6U93AMRl8p2ohhnCU2yY9boS3oeKWQt@singapore-keyvalue.render.com:6379"],  # Redis server
+#         },
+#     },
+# }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -110,12 +110,12 @@ WSGI_APPLICATION = 'mychat.wsgi.application'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 if ENVIRONMENT == 'development':
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+ DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
+}
 else:
     import dj_database_url
     DATABASES = {

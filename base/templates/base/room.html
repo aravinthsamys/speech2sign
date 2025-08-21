@@ -86,9 +86,362 @@
   .checkbox-wrapper-2 .ikxBAC:checked:hover {
     background-color: #535db3;
   }
+
+
+	:root {
+		--clr-bg-gradient-start: #0f2027;
+		--clr-bg-gradient-mid: #203a43;
+		--clr-bg-gradient-end: #2c5364;
+		--clr-card-bg: rgba(255, 255, 255, .08);
+		--clr-card-border: rgba(255, 255, 255, .15);
+		--clr-card-blur: 16px;
+		--clr-accent: #00e0ff;
+		--clr-accent-hover: #66f0ff;
+		--clr-accent-warn: #ff6b6b;
+		--clr-text: #f1f5f9;
+		--clr-text-muted: #9ca3af;
+		--radius-lg: 1rem;
+		--radius-md: .5rem;
+		--gap-lg: 2rem;
+		--gap-md: 1rem;
+		--gap-sm: .5rem;
+		--trans-fast: .15s ease;
+		--trans-med: .25s ease;
+	}
+
+	body {
+		background-color: #0f364d;
+		color: rgb(118, 198, 230);
+	}
+	body {
+  margin: 0;
+  /* height: 100vh; */
+  background: linear-gradient(to bottom, #041722, rgb(14, 176, 204));
+  font-family: Arial, sans-serif;
+}
+
+	#room-name-wrapper {
+		text-align: center;
+		font-size: 18px;
+	}
+
+	.topicmoon {
+		font-weight: 800;
+		font-size: 30px;
+		text-align: center;
+	}
+
+	#video-streams {
+		display: flex;
+		flex-wrap: wrap;
+		height: 85vh;
+		width: 95%;
+		margin: 0 auto;
+	}
+
+	.video-container {
+		flex-basis: 500px;
+		flex-grow: 1;
+		max-height: 100%;
+		min-height: 350px;
+		border: 1px solid rgb(75, 93, 172);
+		border-radius: 5px;
+		margin: 2px;
+		background-color: rgba(198, 202, 219, 1);
+		position: relative;
+	}
+
+	.video-player {
+		height: 100%;
+		width: 100%;
+
+	}
+
+	.video-player>* {
+		border-radius: 5px;
+	}
+
+	.username-wrapper {
+		position: absolute;
+		top: 10px;
+		left: 10px;
+		z-index: 9999;
+		background-color: rgba(0, 0, 0, 0.3);
+		width: fit-content;
+		padding: 10px;
+		border-radius: 5px;
+		color: #fff;
+		font-size: 14px;
+	}
+
+	.vidiv {
+		background-color: #424140;
+		border-radius: 15px;
+		padding: 20px;
+	}
+
+	@media screen and (max-width:1650px) {
+		.video-container {
+			flex-basis: 300px;
+			min-height: 200px;
+		}
+
+	}
+
+
+	/* ----------------- Room Styling | Controls ------------------*/
+
+	#controls-wrapper {
+		display: flex;
+		width: 100%;
+		justify-content: center;
+		column-gap: 2em;
+		position: relative;
+		bottom: 70px;
+
+	}
+
+	.control-icon {
+		height: 20px;
+		width: 20px;
+		box-shadow: var(--shaddow);
+		background-color: #fff;
+		cursor: pointer;
+		padding: 10px;
+		border-radius: 5px;
+
+	}
+
+	#leave-btn {
+		background-color: rgb(255, 80, 80, 1);
+	}
+
+	/* Apply the grid layout to the parent container */
+	.container {
+		display: grid;
+		grid-template-columns: 3fr 1fr;
+		gap: 20px;
+		padding: 20px;
+	}
+
+	/* Optional styling for the columns */
+	.videos {
+		border: 5px solid #ffffff;
+		/* Add a border for clarity */
+		padding: 10px;
+		border-radius: 20px;
+		box-shadow: 0px 0px 10px 0px #fafafa;
+	}
+
+	.transcriptions {
+		border: 5px solid rgb(250, 250, 250);
+		/* Add a border for clarity */
+		padding: 10px;
+		border-radius: 20px;
+		box-shadow: 0px 0px 10px 0px #9c9a9a;
+
+	}
+	.mobile{
+		display: none;
+	}
+
+	@media (max-width: 500px) {
+.mobile{
+	display: block;
+}
+.mobilemain{
+	display: none;
+}
+		.container {
+			grid-template-columns: 0.5fr;
+			width: 350px;
+			display: flex;
+			flex-direction: column;
+
+		}
+
+		.transcriptions {
+			border: 2px solid rgb(250, 250, 250);
+		}
+
+		.videos {
+			border: 2px solid #ffffff;
+			height: 560px;
+		}
+
+		button#sendBtn.submit {
+			font-size: 15px;
+			height: 30px;
+			width: 130px;
+			margin-top: 15px;
+		}
+
+		h2 {
+			margin-top: 10px;
+		}
+
+		.mytext {
+			width: 200px;
+		}
+
+		video#videoPlayer {
+			width: 270px;
+		}
+
+		div.videos {
+			height: 500px;
+		}
+
+		main {
+			height: 150px;
+			font-size: 10px;
+		}
+
+		section#video-streams {
+			height: 240px;
+		}
+
+		#controls-wrapper {
+			bottom: -175px;
+
+		}
+
+		.control-icon {
+			height: 12px;
+			width: 12px;
+		}
+
+		div.transcriptions {
+			/* height: 550px; */
+			height: fit-content;
+		}
+
+		video#videoPlayer {
+			height: 200px;
+		}
+
+		input#speechToText.mytext {
+			width: 230px;
+			border-radius: 20px;
+			margin-left: 30px;
+		}
+
+		button.mic {
+			display: none;
+		}
+
+		div.container {
+			padding: 5px;
+		}
+
+		/*
+		.topicmoon {
+		position: relative;
+		font-size: 10px;
+	}
+	body{
+		font-size: 13px;
+		width: 300px;
+	}
+	#video-streams {
+		display: flex;
+		flex-wrap: wrap;
+		height: 40vh;
+		width: 95%;
+		margin: 0 auto;
+	}
+	.video-container {
+		max-height: 50%;
+		min-height: 200px;
+	}
+	.vidiv {
+		width: 300px;
+	} */
+	}
+
+	.transcription-section {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+
+		height: 100%;
+		text-align: center;
+	}
+
+	#start-transcription-btn {
+
+		padding: 10px 20px;
+		background-color: #f5f6f7;
+		color: white;
+		border: none;
+		border-radius: 5px;
+		cursor: pointer;
+		font-size: 16px;
+		transition: background-color 0.3s;
+	}
+
+	#start-transcription-btn:hover {
+		background-color: #0056b3;
+	}
+
+	.mytext {
+		border: 1px solid #393f4d;
+		border-right: none;
+		padding: 4px;
+		margin: 0px;
+		float: left;
+		height: 32px;
+		overflow: hidden;
+		line-height: 16px;
+		width: 300px;
+		margin-left: 54px;
+		border-radius: 20px 0px 0px 20px;
+	}
+
+	.mic {
+		border: 1px solid #070101;
+		background: #ffffff;
+		vertical-align: top;
+		padding: 0px;
+		margin: 0;
+		float: left;
+		cursor: pointer;
+		height: 42px;
+		overflow: hidden;
+		width: 5em;
+		text-align: center;
+		line-height: 16px;
+		border-radius: 0px 20px 20px 0px;
+	}
+
+	.submit {
+		border: 1px solid #393f4d;
+		height: 42px;
+		width: 160px;
+		cursor: pointer;
+		text-align: center;
+		background-color: #ffffff;
+		color: #393f4d;
+		font-weight: bold;
+		font-size: 24px;
+		font-family: "Times New Roman";
+		vertical-align: top;
+		border-radius: 20px;
+	}
+
+	#videoPlayer {
+		width: 600px;
+		height: 350px;
+	}
+
+
+
+
 </style>
 
-
+<center>
+	<h3 class="text-center my-4 topicmoon text-light">SpeechToSign</h3>
+</center>
 <div class="container">
 	<div class="videos">
 		<main>
