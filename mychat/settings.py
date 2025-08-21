@@ -65,14 +65,14 @@ CHANNEL_LAYERS = {
 
 
 # Redis Channel Layer
-# CHANNEL_LAYERS = {
-#     "default": {
-#         "BACKEND": "channels_redis.core.RedisChannelLayer",
-#         "CONFIG": {
-#             "hosts": ["rediss://red-cv7pkvogph6c7396cp80:c6U93AMRl8p2ohhnCU2yY9boS3oeKWQt@singapore-keyvalue.render.com:6379"],  # Redis server
-#         },
-#     },
-# }
+CHANNEL_LAYERS = {
+     "default": {
+         "BACKEND": "channels_redis.core.RedisChannelLayer",
+         "CONFIG": {
+             "hosts": ["rediss://red-cv7pkvogph6c7396cp80:c6U93AMRl8p2ohhnCU2yY9boS3oeKWQt@singapore-keyvalue.render.com:6379"],  # Redis server
+         },
+     },
+ }
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
