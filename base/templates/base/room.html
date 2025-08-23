@@ -618,111 +618,54 @@
 
 
 	//webkitSpeechRecognition api for speech to text conversion
- //  function record() {
-	// let micBtn = document.getElementById("micButton");
-	// let inputBox = document.getElementById("speechToText");
-	// let sendBtn = document.getElementById("sendBtn");
+  function record() {
+	let micBtn = document.getElementById("micButton");
+	let inputBox = document.getElementById("speechToText");
+	let sendBtn = document.getElementById("sendBtn");
 
-	// micBtn.classList.add('listening');
+	micBtn.classList.add('listening');
 
-	// const recognition = new webkitSpeechRecognition();
-	// recognition.lang = 'en-IN';
-	// recognition.interimResults = false;
-	// recognition.maxAlternatives = 1;
+	const recognition = new webkitSpeechRecognition();
+	recognition.lang = 'en-IN';
+	recognition.interimResults = false;
+	recognition.maxAlternatives = 1;
 
-	// recognition.onresult = function (event) {
-	// 	let transcript = event.results[0][0].transcript.trim();
-	// 	console.log("Transcript:", transcript);
+	recognition.onresult = function (event) {
+		let transcript = event.results[0][0].transcript.trim();
+		console.log("Transcript:", transcript);
 
-	// 	micBtn.classList.remove('listening');
+		micBtn.classList.remove('listening');
 
-	// 	// Show input + send button
-	// 	inputBox.style.display = "block";
-	// 	sendBtn.style.display = "inline-block";
+		// Show input + send button
+		inputBox.style.display = "block";
+		sendBtn.style.display = "inline-block";
 
-	// 	let cleanedMessage = transcript;
+		let cleanedMessage = transcript;
 
-	// 	if (useCommandMode) {
-	// 	const lowerTranscript = transcript.toLowerCase();
-	// 	inputBox.style.display = "block";
-	// 	sendBtn.style.display = "inline-block";
-	// 	if (lowerTranscript.includes("send message")) {
-	// 		cleanedMessage = transcript.replace(/send message/i, "").trim();
-	// 		inputBox.value = cleanedMessage;
-	// 		if (cleanedMessage.length > 0) {
-	// 		document.getElementById("textForm").requestSubmit();
-	// 		}
-	// 	} else {
-	// 		inputBox.value = cleanedMessage;
-	// 	}
-	// 	} else {
-	// 		inputBox.style.display = "none";
- //            sendBtn.style.display = "none";
-	// 	inputBox.value = cleanedMessage;
-	// 	if (cleanedMessage.length > 0) {
-	// 		document.getElementById("textForm").requestSubmit();
-	// 	}
-	// 	}
-	// };
+		if (useCommandMode) {
+		const lowerTranscript = transcript.toLowerCase();
+		inputBox.style.display = "block";
+		sendBtn.style.display = "inline-block";
+		if (lowerTranscript.includes("send message")) {
+			cleanedMessage = transcript.replace(/send message/i, "").trim();
+			inputBox.value = cleanedMessage;
+			if (cleanedMessage.length > 0) {
+			document.getElementById("textForm").requestSubmit();
+			}
+		} else {
+			inputBox.value = cleanedMessage;
+		}
+		} else {
+			inputBox.style.display = "none";
+            sendBtn.style.display = "none";
+		inputBox.value = cleanedMessage;
+		if (cleanedMessage.length > 0) {
+			document.getElementById("textForm").requestSubmit();
+		}
+		}
+	};
 
 
-	function record() {
-    if (typeof window === "undefined" || typeof navigator === "undefined") {
-        console.warn("Speech recognition is only available in the browser.");
-        return;
-    }
-
-    // Ensure API is supported
-    if (!("mediaDevices" in navigator) || !navigator.mediaDevices.getUserMedia) {
-        alert("Your browser does not support microphone access.");
-        return;
-    }
-
-    let micBtn = document.getElementById("micButton");
-    let inputBox = document.getElementById("speechToText");
-    let sendBtn = document.getElementById("sendBtn");
-
-    micBtn.classList.add("listening");
-
-    navigator.mediaDevices.getUserMedia({ audio: true })
-        .then(stream => {
-            const recognition = new webkitSpeechRecognition();
-            recognition.lang = "en-IN";
-            recognition.interimResults = false;
-            recognition.maxAlternatives = 1;
-
-            recognition.onresult = function (event) {
-                let transcript = event.results[0][0].transcript.trim();
-                console.log("Transcript:", transcript);
-
-                micBtn.classList.remove("listening");
-                inputBox.style.display = "block";
-                sendBtn.style.display = "inline-block";
-                inputBox.value = transcript;
-
-                if (transcript.length > 0) {
-                    document.getElementById("textForm").requestSubmit();
-                }
-            };
-
-            recognition.onerror = function (event) {
-                console.error("Speech recognition error:", event.error);
-                micBtn.classList.remove("listening");
-            };
-
-            recognition.onend = function () {
-                micBtn.classList.remove("listening");
-                console.log("Speech recognition stopped.");
-            };
-
-            recognition.start();
-        })
-        .catch(err => {
-            micBtn.classList.remove("listening");
-            console.error("Microphone access failed:", err);
-            alert("Microphone access denied or unavailable.");
-        });
-}
 
 //  the end
 
